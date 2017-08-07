@@ -5,8 +5,9 @@
   2. [Why Review Code?](#why-review-code)
   3. [Basics](#basics)
   4. [Readability][#readability]
-  5. [Security][#security]
+  5. [Exceptions][#exceptions]
   6. [User Input][#user-input]
+  7. [Security][#security]
 
 ## Introduction
 Code reviews can inspire dread in both reviewer and reviewee. Having your
@@ -44,3 +45,22 @@ foundation.
 - Be kind. It's scary to have your code reviewed is scary and can bring about
 feelings of insecurity in even the most experienced developer. Be positive
 in your language and keep your teammates comfortable and secure in their work!
+
+## Readability
+
+### Typos
+Avoid nitpicking as much as you can and save it for your linter, compiler, and
+formatter. When you can't, such as in the case of typos, leave a kind comment
+suggesting a fix. It's the little things that make a big difference sometimes!
+
+### Variable and function names
+Naming is one of the hardest problems in computer science. We've all given names
+to variables, functions, and files that are confusing. Help your teammate about
+by suggesting a clear name.
+
+```javascript
+// This function could be better named as namesToUpperCase
+function u(names) {
+  // ...
+}
+```
