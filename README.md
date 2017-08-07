@@ -3,6 +3,10 @@
 ## Table of Contents
   1. [Introduction](#introduction)
   2. [Why Review Code?](#why-review-code)
+  3. [Basics](#basics)
+  4. [Readability][#readability]
+  5. [Security][#security]
+  6. [User Input][#user-input]
 
 ## Introduction
 Code reviews can inspire dread in both reviewer and reviewee. Having your
@@ -26,3 +30,17 @@ and with the least amount of errors. Make sure your team implements a code
 review process for new code that is introduced into your code base. Find a
 process that works for you and your team, there's no one size fits all. The
 important point is to do code reviews as regularly as possible.
+
+## Basics
+Code reviews should:
+
+- Avoid details that can be handled by a static analysis tool. Don't argue about
+details such as code formatting and whether to use `let` or `var`. Having a
+formatter and linter can save your team a lot of time from reviews that your
+computer can do for you.
+- Avoid API discussion. These discussions should happen before the code is even
+written. Don't try to argue about the floor plan once you've poured the concrete
+foundation.
+- Be kind. It's scary to have your code reviewed is scary and can bring about
+feelings of insecurity in even the most experienced developer. Be positive
+in your language and keep your teammates comfortable and secure in their work!
