@@ -4,10 +4,11 @@
   1. [Introduction](#introduction)
   2. [Why Review Code?](#why-review-code)
   3. [Basics](#basics)
-  4. [Readability][#readability]
-  5. [Exceptions][#exceptions]
-  6. [User Input][#user-input]
-  7. [Security][#security]
+  4. [Readability](#readability)
+  5. [Side Effects](#side-effects)
+  6. [User Input](#user-input)
+  7. [Security](#security)
+  8. [Performance](#performance)
 
 ## Introduction
 Code reviews can inspire dread in both reviewer and reviewee. Having your
@@ -16,9 +17,11 @@ beautiful vacation. Even worse, reviewing other people's code can feel like
 a painful and ambiguous exercise, searching for problems and not even knowing where to begin.
 
 This project aims to provide some solid tips for how to review the code you and
-your team write. This is by no means an exhaustive list, but it should help you
-catch as many bugs as possible from a small and memorable set of ideas that can
-hopefully be applied to any review.
+your team write.
+
+This is by no means an exhaustive list. Hopefully this will help you
+catch as many bugs as possible from a small and memorable set of ideas that is
+applicable to any project of any language.
 
 ## Why Review Code?
 Code reviews are a necessary part of the software engineering process because
@@ -56,11 +59,44 @@ suggesting a fix. It's the little things that make a big difference sometimes!
 ### Variable and function names
 Naming is one of the hardest problems in computer science. We've all given names
 to variables, functions, and files that are confusing. Help your teammate about
-by suggesting a clear name.
+by suggesting a clearer name if one doesn't make sense.
 
 ```javascript
 // This function could be better named as namesToUpperCase
 function u(names) {
   // ...
 }
+```
+
+### Function length
+Functions should do one thing! Long functions usually mean that they are doing
+too much. Tell your teammate to split out the function into multiple different
+functions.
+
+```javascript
+
+```
+
+### File length
+Just like functions, a file should be about one thing. A file represents a
+module and a module should do one thing for your codebase.
+
+For example, if your module is called `fake-name-generator` it should just be
+responsible for creating fake names like "Keyser Söze". If the
+`fake-name-generator` also includes a bunch of utility functions for querying a
+database of names, that should be in a separate module.
+
+There's no rule for how long a file should be, but if it's long like below and
+includes functions that don't relate to one another ,then it should probably
+be split apart.
+
+```javascript
+1: import _ from 'lodash';
+2: function generateFakeNames() {
+3:   // ..
+4: }
+...
+1128: function queryRemoteDatabase() {
+1129:   // ...  
+1130: }
 ```
