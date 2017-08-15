@@ -17,11 +17,9 @@ beautiful vacation. Even worse, reviewing other people's code can feel like
 a painful and ambiguous exercise, searching for problems and not even knowing where to begin.
 
 This project aims to provide some solid tips for how to review the code you and
-your team write.
-
-This is by no means an exhaustive list. Hopefully this will help you
-catch as many bugs as possible from a small and memorable set of ideas that is
-applicable to any project of any language.
+your team write. All examples are written in JavaScript, but the advice should
+be applicable to any project of any language.This is by no means an exhaustive
+list but hopefully this will help you catch as many bugs as possible.
 
 ## Why Review Code?
 Code reviews are a necessary part of the software engineering process because
@@ -38,9 +36,10 @@ important point is to do code reviews as regularly as possible.
 ## Basics
 Code reviews should:
 
-- Avoid details that can be handled by a static analysis tool. Don't argue about
-details such as code formatting and whether to use `let` or `var`. Having a
-formatter and linter can save your team a lot of time from reviews that your
+- Automate as much of the review as you can. That means avoid details that can
+be handled by a static analysis tool. Don't argue about details such as code
+formatting and whether to use `let` or `var`. Having a formatter and linter can
+save your team a lot of time from reviews that your
 computer can do for you.
 - Avoid API discussion. These discussions should happen before the code is even
 written. Don't try to argue about the floor plan once you've poured the concrete
@@ -51,12 +50,12 @@ in your language and keep your teammates comfortable and secure in their work!
 
 ## Readability
 
-### Typos
+### Typos should be corrected
 Avoid nitpicking as much as you can and save it for your linter, compiler, and
 formatter. When you can't, such as in the case of typos, leave a kind comment
 suggesting a fix. It's the little things that make a big difference sometimes!
 
-### Variable and function names
+### Variable and function names should be clear
 Naming is one of the hardest problems in computer science. We've all given names
 to variables, functions, and files that are confusing. Help your teammate about
 by suggesting a clearer name if one doesn't make sense.
@@ -68,16 +67,25 @@ function u(names) {
 }
 ```
 
-### Function length
+### Functions should be short
 Functions should do one thing! Long functions usually mean that they are doing
 too much. Tell your teammate to split out the function into multiple different
 functions.
 
 ```javascript
-
+// This is both emailing clients and deciding which are active. Should be
+// 2 different functions.
+function emailClients(clients) {
+  clients.forEach((client) => {
+    const clientRecord = database.lookup(client);
+    if (clientRecord.isActive()) {
+      email(client);
+    }
+  });
+}
 ```
 
-### File length
+### Files should be short
 Just like functions, a file should be about one thing. A file represents a
 module and a module should do one thing for your codebase.
 
@@ -100,3 +108,34 @@ be split apart.
 1129:   // ...  
 1130: }
 ```
+
+## Side Effects
+
+### Functions should be pure
+```javascript
+// Global variable referenced by following function.
+// If we had another function that used this name, now it'd be an array and it could break it.
+let name = 'Ryan McDermott';
+
+function splitIntoFirstAndLastName() {
+  name = name.split(' ');
+}
+
+splitIntoFirstAndLastName();
+
+console.log(name); // ['Ryan', 'McDermott'];
+```
+
+### I/O functions should have failure cases handled
+Any function that does I/O should handle when something goes wrong
+
+```javascript
+function getIngredientsFromFile() {
+  const onFulfilled = (buffer) => {
+    let lines = buffer.split('\n');
+    return lines.forEach(line => <Ingredient ingredient={line}/>
+  };
+
+  // What about when this rejected because of an error? What do we return?
+  return readFile('./ingredients.txt').then(onFulfilled)
+}
