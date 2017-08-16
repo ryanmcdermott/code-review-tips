@@ -4,11 +4,13 @@
   1. [Introduction](#introduction)
   2. [Why Review Code?](#why-review-code)
   3. [Basics](#basics)
-  4. [Readability](#readability)
-  5. [Side Effects](#side-effects)
-  6. [User Input](#user-input)
-  7. [Security](#security)
-  8. [Performance](#performance)
+  4. [Table of Contents](#table-of-contents)
+  5. [Readability](#readability)
+  6. [Side Effects](#side-effects)
+  7. [User Input](#user-input)
+  8. [Security](#security)
+  9. [Performance](#performance)
+  10. [Null and Infinite Cases](#null-and-infinite-cases)
 
 ## Introduction
 Code reviews can inspire dread in both reviewer and reviewee. Having your
@@ -111,7 +113,7 @@ be split apart.
 
 ## Side Effects
 
-### Functions should be pure
+### Functions should be as pure as possible
 ```javascript
 // Global variable referenced by following function.
 // If we had another function that used this name, now it'd be an array and it could break it.
@@ -133,9 +135,43 @@ Any function that does I/O should handle when something goes wrong
 function getIngredientsFromFile() {
   const onFulfilled = (buffer) => {
     let lines = buffer.split('\n');
-    return lines.forEach(line => <Ingredient ingredient={line}/>
+    return lines.forEach(line => <Ingredient ingredient={line}/>)
   };
 
   // What about when this rejected because of an error? What do we return?
-  return readFile('./ingredients.txt').then(onFulfilled)
+  return readFile('./ingredients.txt').then(onFulfilled);
 }
+```
+
+## User Input
+
+### User input should be limited
+Users can potentially input an unlimited amount of text. It's important to set
+limits if a function takes any kind of user data in.
+
+```javascript
+router.route('/message').post((req, res) => {
+  const message = req.body.content;
+
+  // What happens if the message is many megabytes of data? Do we want to store
+  // that in the database? We should set limits on the size.
+  db.save(message);
+});
+```
+
+### Functions should handle unexpected user input
+Users will always surprise you with the data they give you. Don't expect that
+you will always get the right type of data or even any data in a request from a
+user. [And don't rely on client-side validation alone](https://twitter.com/ryconoclast/status/885523459748487169)
+
+```javascript
+router.route('/transfer-money').post((req, res) => {
+  const amount = req.body.amount;
+  const from = user.id;
+  const to = req.body.to;
+
+  // What happens if we got a string instead of a number as our amount? This
+  // function would fail
+  transferMoney(from, to, amount);
+});
+```
