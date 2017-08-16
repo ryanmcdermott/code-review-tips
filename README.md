@@ -9,7 +9,8 @@
   6. [User Input](#user-input)
   7. [Security](#security)
   8. [Performance](#performance)
-  9. [Null and Infinite Cases](#null-and-infinite-cases)
+  9. [Testing](#testing)
+  10. [Miscellaneous](#miscellaneous)
 
 ## Introduction
 Code reviews can inspire dread in both reviewer and reviewee. Having your
@@ -110,6 +111,8 @@ be split apart.
 1130: }
 ```
 
+### Functions should be documented
+
 ## Side Effects
 
 ### Functions should be as pure as possible
@@ -183,3 +186,28 @@ particular language and runtime environment. Below is a very small and
 incomplete list of common security problems. Don't rely on this alone! Automate
 as much security review as you can on every commit, and perform routine security
 audits.
+
+## Performance
+
+### Functions should use efficient algorithms and data structures
+This is different for every particular case, but use your best judgment to see
+if there are any ways to improve the efficiency of a piece of code. Your users
+will thank you!
+
+### Actions should be logged
+Logging helps give metrics
+
+## Testing
+
+### New code should be tested
+
+### Tests should actually test what the function is doing
+
+## Miscellaneous
+> _"Everything can be filed under miscellaneous"_
+
+> George Bernard Shaw
+
+### Null cases should be handled
+
+### Large cases should be handled
