@@ -4,13 +4,12 @@
   1. [Introduction](#introduction)
   2. [Why Review Code?](#why-review-code)
   3. [Basics](#basics)
-  4. [Table of Contents](#table-of-contents)
-  5. [Readability](#readability)
-  6. [Side Effects](#side-effects)
-  7. [User Input](#user-input)
-  8. [Security](#security)
-  9. [Performance](#performance)
-  10. [Null and Infinite Cases](#null-and-infinite-cases)
+  4. [Readability](#readability)
+  5. [Side Effects](#side-effects)
+  6. [User Input](#user-input)
+  7. [Security](#security)
+  8. [Performance](#performance)
+  9. [Null and Infinite Cases](#null-and-infinite-cases)
 
 ## Introduction
 Code reviews can inspire dread in both reviewer and reviewee. Having your
@@ -175,3 +174,12 @@ router.route('/transfer-money').post((req, res) => {
   transferMoney(from, to, amount);
 });
 ```
+
+## Security
+Data security is the most important aspect of your application. If users can't
+trust you with their data, then you won't have a business. There are numerous
+different types of security exploits that can plague an app, depending on the
+particular language and runtime environment. Below is a very small and
+incomplete list of common security problems. Don't rely on this alone! Automate
+as much security review as you can on every commit, and perform routine security
+audits.
