@@ -46,7 +46,7 @@ computer can do for you.
 - Avoid API discussion. These discussions should happen before the code is even
 written. Don't try to argue about the floor plan once you've poured the concrete
 foundation.
-- Be kind. It's scary to have your code reviewed is scary and can bring about
+- Be kind. It's scary to have your code reviewed and it can bring about
 feelings of insecurity in even the most experienced developer. Be positive
 in your language and keep your teammates comfortable and secure in their work!
 
@@ -111,7 +111,48 @@ be split apart.
 1130: }
 ```
 
-### Functions should be documented
+### Exported functions should be documented
+If your function is intended to be used by other libraries, it helps to add
+documentation so users of it know what it does.
+
+```javascript
+// This needs documentation. What is this function for? How is it used?
+export function networkMonitor(graph, duration, failureCallback) {
+  // ...
+}
+```
+
+### Complex code should be commented
+If you have named things well and the logic is still confusing, then it's time
+for a comment.
+
+```javascript
+function leftPad (str, len, ch) {
+  str = str + '';
+  len = len - str.length;
+
+  if (len <= 0) return str;
+
+  if (!ch && ch !== 0) ch = ' ';
+
+  ch = ch + '';
+
+  if (ch === ' ' && len < 10) return cache[len] + str;
+
+  var pad = '';
+
+  while (true) {
+    // This needs a comment, why a logical and here?
+    if (len & 1) pad += ch;
+    // This needs a comment, why a bit shift here?
+    len >>= 1;
+    if (len) ch += ch;
+    else break;
+  }
+
+  return pad + str;
+}
+```
 
 ## Side Effects
 
@@ -148,8 +189,8 @@ function getIngredientsFromFile() {
 ## User Input
 
 ### User input should be limited
-Users can potentially input an unlimited amount of text. It's important to set
-limits if a function takes any kind of user data in.
+Users can potentially input an unlimited amount of data to send to you. It's
+important to set limits if a function takes any kind of user data in.
 
 ```javascript
 router.route('/message').post((req, res) => {
@@ -194,8 +235,11 @@ This is different for every particular case, but use your best judgment to see
 if there are any ways to improve the efficiency of a piece of code. Your users
 will thank you!
 
-### Actions should be logged
-Logging helps give metrics
+### Important actions should be logged
+Logging helps give metrics about performance and insight into user behavior.
+Not every action needs to be logged, but decide with your team what makes sense
+to keep track of for data analytics. And be sure that no personally identifiable
+information is exposed!
 
 ## Testing
 
