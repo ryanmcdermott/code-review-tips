@@ -233,7 +233,23 @@ audits.
 ### Functions should use efficient algorithms and data structures
 This is different for every particular case, but use your best judgment to see
 if there are any ways to improve the efficiency of a piece of code. Your users
-will thank you!
+will thank you for the faster speeds!
+
+```javascript
+// If mentions was a hash data structure you wouldn't need to iterate through
+// all mentions to find a user. You could simply return the presence of the
+// user key in the mentions hash
+function isUserMentionedInComments(mentions, user) {
+  let mentioned = false;
+  mentions.forEach(mention => {
+    if (mention.user === user) {
+      mentioned = true;
+    }
+  })
+
+  return mentioned;
+}
+```
 
 ### Important actions should be logged
 Logging helps give metrics about performance and insight into user behavior.
@@ -255,3 +271,5 @@ information is exposed!
 ### Null cases should be handled
 
 ### Large cases should be handled
+
+### Commit messages should be clear and accurately describe new code
