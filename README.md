@@ -14,32 +14,34 @@
 
 ## Introduction
 Code reviews can inspire dread in both reviewer and reviewee. Having your
-code analyzed can feel like getting screened by the TSA as you go off to a
-beautiful vacation. Even worse, reviewing other people's code can feel like
-a painful and ambiguous exercise, searching for problems and not even knowing where to begin.
+code analyzed can feel as invasive as being screened by the TSA as you go off
+to a beautiful vacation. Even worse, reviewing other people's code can feel like
+a painful and ambiguous exercise, searching for problems and not even knowing
+where to begin.
 
-This project aims to provide some solid tips for how to review the code you and
-your team write. All examples are written in JavaScript, but the advice should
-be applicable to any project of any language.This is by no means an exhaustive
-list but hopefully this will help you catch as many bugs as possible.
+This project aims to provide some solid tips for how to review the code that
+you and your team write. All examples are written in JavaScript, but the advice
+should be applicable to any project of any language. This is by no means an
+exhaustive list, but hopefully this will help you catch as many bugs as
+possible long before users ever see your feature.
 
 ## Why Review Code?
 Code reviews are a necessary part of the software engineering process because
-you alone as a developer can't catch every problem in a piece of code you
+you alone can't catch every problem in a piece of code you
 write. That's ok though! Even the best basketball players in the world miss
 shots.
 
 Having others review our work ensures that we deliver the best product to users
 and with the least amount of errors. Make sure your team implements a code
 review process for new code that is introduced into your code base. Find a
-process that works for you and your team, there's no one size fits all. The
+process that works for you and your team. There's no one size fits all. The
 important point is to do code reviews as regularly as possible.
 
 ## Basics
 Code reviews should:
 
-- Automate as much of the review as you can. That means avoid details that can
-be handled by a static analysis tool. Don't argue about details such as code
+- Be as automated as possible. This means avoid details that can
+be handled by a static analysis tool. Don't argue about nuances such as code
 formatting and whether to use `let` or `var`. Having a formatter and linter can
 save your team a lot of time from reviews that your
 computer can do for you.
@@ -130,16 +132,6 @@ for a comment.
 function leftPad (str, len, ch) {
   str = str + '';
   len = len - str.length;
-
-  if (len <= 0) return str;
-
-  if (!ch && ch !== 0) ch = ' ';
-
-  ch = ch + '';
-
-  if (ch === ' ' && len < 10) return cache[len] + str;
-
-  var pad = '';
 
   while (true) {
     // This needs a comment, why a logical and here?
@@ -261,9 +253,26 @@ Not every action needs to be logged, but decide with your team what makes sense
 to keep track of for data analytics. And be sure that no personally identifiable
 information is exposed!
 
+```javascript
+router.route('/request-ride').post((req, res) => {
+  const currentLocation = req.body.currentLocation;
+  const destination = req.body.destination;
+
+  requestRide(user, currentLocation, destination).then(result => {
+    // We should log before and after this block to get a metric for how long
+    // this task took, and potentially even what locations were involved in ride
+    // ...
+  });
+});
+```
+
 ## Testing
 
 ### New code should be tested
+All new code should include a test, whether it fixes a bug, or is a new feature.
+If it's a bug fix it should have a test proving that the bug is fixed. And if
+it's a new feature, every  component should be unit tested and there should be
+an integration test ensuring that it works with the rest of the system.
 
 ### Tests should actually test what the function is doing
 
@@ -277,3 +286,9 @@ information is exposed!
 ### Large cases should be handled
 
 ### Commit messages should be clear and accurately describe new code
+
+### The code should what it's supposed to
+This seems obvious, but most reviewers don't have the time or take the time to
+manually test every user-facing change. It's important to make sure the business
+logic of every change is as per design. It's easy to forget that when you're
+just looking for problems in the code!
