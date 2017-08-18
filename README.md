@@ -228,6 +228,10 @@ incomplete list of common security problems. Don't rely on this alone! Automate
 as much security review as you can on every commit, and perform routine security
 audits.
 
+### XSS should not be possible
+
+### Personally Identifiable Information (PII) should not leak
+
 ## Performance
 
 ### Functions should use efficient algorithms and data structures
