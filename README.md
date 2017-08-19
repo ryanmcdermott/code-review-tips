@@ -343,7 +343,7 @@ class InventoryList {
             </th>
           </tr>
           // We should should something for the null case here if there's
-          // nothing in the data inventory  
+          // nothing in the data inventory
           {Object.keys(this.data.inventory).map(itemId => (
               <tr key={i}>
                 <td>
@@ -364,6 +364,21 @@ class InventoryList {
 
 ### Singular cases should be handled
 ```javascript
+
+class MoneyDislay {
+  constructor(amount) {
+    this.amount = amount;
+  }
+
+  render() {
+    // What happens if the user has 1 dollar? You can't say plural "dollars"
+    return (
+      <div className="fancy-class">
+        You have {this.amount} dollars in your account
+      </div>
+    );
+  }
+}
 ```
 
 ### Large cases should be handled
