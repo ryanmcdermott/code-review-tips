@@ -6,7 +6,7 @@
   3. [Basics](#basics)
   4. [Readability](#readability)
   5. [Side Effects](#side-effects)
-  6. [User Input](#user-input)
+  6. [Limits](#limits)
   7. [Security](#security)
   8. [Performance](#performance)
   9. [Testing](#testing)
@@ -318,10 +318,56 @@ assert(date1 === '1/6/2017');
 > George Bernard Shaw
 
 ### Null cases should be handled
+If you have a list component for example, all is well and good if you display a
+nice beautiful table that shows all its data. Your users love it and you get a
+promotion! But what happens when no data comes back? What do you show in the
+null case? Your code should be resilient to every case that can occur. If
+there's something bad that can happen in your code, eventually it will happen.
+
+```javascript
+class InventoryList {
+  constructor(data) {
+    this.data = data;
+  }
+
+  render() {
+    return (
+      <table>
+        <tbody>
+          <tr>
+            <th>
+              ID
+            </th>
+            <th>
+              Product
+            </th>
+          </tr>
+          // We should should something for the null case here if there's
+          // nothing in the data inventory  
+          {Object.keys(this.data.inventory).map(itemId => (
+              <tr key={i}>
+                <td>
+                  {itemId}
+                </td>
+
+                <td>
+                  {this.state.inventory[itemId].product}
+                </td>
+              </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  }
+}
+```
 
 ### Singular cases should be handled
+```javascript
+```
 
 ### Large cases should be handled
+
 
 ### Commit messages should be clear and accurately describe new code
 We've all written commit messages like "Changed some crap", "damn it",
@@ -332,7 +378,7 @@ commit. Write commit messages that describe the code accurately, and include
 a ticket number from your issue tracking system if you have one. That will make
 searching through your commit log much easier.
 
-### The code should what it's supposed to
+### The code should do what it's supposed to do
 This seems obvious, but most reviewers don't have the time or take the time to
 manually test every user-facing change. It's important to make sure the business
 logic of every change is as per design. It's easy to forget that when you're
