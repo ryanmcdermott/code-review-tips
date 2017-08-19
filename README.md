@@ -38,19 +38,22 @@ process that works for you and your team. There's no one size fits all. The
 important point is to do code reviews as regularly as possible.
 
 ## Basics
-Code reviews should:
 
-- Be as automated as possible. This means avoid details that can
-be handled by a static analysis tool. Don't argue about nuances such as code
-formatting and whether to use `let` or `var`. Having a formatter and linter can
-save your team a lot of time from reviews that your
-computer can do for you.
-- Avoid API discussion. These discussions should happen before the code is even
-written. Don't try to argue about the floor plan once you've poured the concrete
+### Code reviews should be as automated as possible
+Avoid discussing details that can be handled by a static analysis tool. Don't
+argue about nuances such as code formatting and whether to use `let` or `var`.
+Having a formatter and linter can save your team a lot of time from reviews
+that your computer can do for you.
+
+## Code reviews should avoid API discussion
+These discussions should happen before the code is even written. Don't try to
+argue about the floor plan once you've poured the concrete
 foundation.
-- Be kind. It's scary to have your code reviewed and it can bring about
-feelings of insecurity in even the most experienced developer. Be positive
-in your language and keep your teammates comfortable and secure in their work!
+
+### Code reviews should be kind
+It's scary to have your code reviewed and it can bring about feelings of
+insecurity in even the most experienced developer. Be positive in your language
+and keep your teammates comfortable and secure in their work!
 
 ## Readability
 
@@ -61,7 +64,7 @@ suggesting a fix. It's the little things that make a big difference sometimes!
 
 ### Variable and function names should be clear
 Naming is one of the hardest problems in computer science. We've all given names
-to variables, functions, and files that are confusing. Help your teammate about
+to variables, functions, and files that are confusing. Help your teammate out
 by suggesting a clearer name if one doesn't make sense.
 
 ```javascript
@@ -152,7 +155,7 @@ function leftPad (str, len, ch) {
 ```javascript
 // Global variable referenced by following function.
 // If we had another function that used this name, now it'd be an array and it
-// could break it.
+// could break it. Instead it's better to pass in a name parameter
 let name = 'Ryan McDermott';
 
 function splitIntoFirstAndLastName() {
