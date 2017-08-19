@@ -298,9 +298,11 @@ assert(result.status === enums.SUCCESS);
 
 ### Tests should stress edge cases and limits of a function
 ```javascript
-function dateAdd(dateTime, minutes, ) {
-
+function dateAdd(dateTime, minutes) {
+  // ...
 }
+
+
 ```
 
 ## Miscellaneous
@@ -313,6 +315,13 @@ function dateAdd(dateTime, minutes, ) {
 ### Large cases should be handled
 
 ### Commit messages should be clear and accurately describe new code
+We've all written commit messages like "Changed some crap", "damn it",
+"ugg one more to fix this stupid bug". These are funny and satisfying, but not
+helpful when you're up on a Saturday morning because you pushed code on a Friday
+night and can't figure out what the bad code was doing when you `git blamed` the
+commit. Write commit messages that describe the code accurately, and include
+a ticket number from your issue tracking system if you have one. That will make
+searching through your commit log much easier.
 
 ### The code should what it's supposed to
 This seems obvious, but most reviewers don't have the time or take the time to
