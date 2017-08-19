@@ -430,6 +430,11 @@ assert(date1 === '1/6/2017');
 > George Bernard Shaw
 
 ### TODO comments should be tracked
+TODO comments are great for letting you and your fellow engineers that something
+needs to be fixed later. Sometimes you gotta ship code and wait to fix it
+later. But eventually you'll have to clean it up! That's why you should track it
+and give a corresponding ID from your issue tracking system so you can schedule
+it and keep track of where the problem is in your codebase.
 
 ### Commit messages should be clear and accurately describe new code
 We've all written commit messages like "Changed some crap", "damn it",
