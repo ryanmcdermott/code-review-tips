@@ -151,7 +151,8 @@ function leftPad (str, len, ch) {
 ### Functions should be as pure as possible
 ```javascript
 // Global variable referenced by following function.
-// If we had another function that used this name, now it'd be an array and it could break it.
+// If we had another function that used this name, now it'd be an array and it
+// could break it.
 let name = 'Ryan McDermott';
 
 function splitIntoFirstAndLastName() {
@@ -291,8 +292,49 @@ as much security review as you can on every commit, and perform routine security
 audits.
 
 ### XSS should not be possible
+Cross-site scripting (XSS), is one of the largest vectors for security attacks
+on a web application. It occurs when you take user data and include it in your
+page without first properly sanitizing it. This can cause your site to execute
+source code from remote pages.
+
+```javascript
+function () {
+  let badge = document.getElementsByClassName('badge');
+  let nameQueryParam = getQueryParams('name');
+
+  /**
+    * What if nameQueryParam was `<script>sendCookie(document.cookie)</script>`?
+    * If that was the query param, a malicious user could lure a user to click a
+    * link with that as the `name` query param, and have the user unknowingly
+    * send their data to a bad actor.
+    */
+  badge.children[0].innerHTML = nameQueryParam;
+}
+
+```
 
 ### Personally Identifiable Information (PII) should not leak
+You bear an enormous weight of responsibility every time you take in user data.
+If you leak data in URLs, in analytics tracking to third parties, or even expose
+data to employees that shouldn't have access, you greatly hurt your users and
+your business. Be careful with other people's lives!
+
+```javascript
+router.route('/bank-user-info').get((req, res) => {
+  const name = user.name;
+  const id = user.id
+  const socialSecurityNumber = user.ssn;
+
+  // There's no reason to send a socialSecurityNumber back in a query parameter
+  // This would be exposed in the URL and potentially to any middleman on the
+  // network watching internet traffic
+  res.addToQueryParams({
+    name,
+    id,
+    socialSecurityNumber
+  })
+});
+```
 
 ## Performance
 
@@ -386,6 +428,8 @@ assert(date1 === '1/6/2017');
 > _"Everything can be filed under miscellaneous"_
 
 > George Bernard Shaw
+
+### TODO comments should be tracked
 
 ### Commit messages should be clear and accurately describe new code
 We've all written commit messages like "Changed some crap", "damn it",
