@@ -362,6 +362,12 @@ class InventoryList {
 }
 ```
 
+### Large cases should be handled
+In the list above, what would happen if 10,000 items came back from the
+inventory? In that case you need some form of pagination or infinite scroll.
+Be sure to always assess the potential edge cases in terms of volume, especially
+when it comes to UI programming.
+
 ### Singular cases should be handled
 ```javascript
 
@@ -380,9 +386,6 @@ class MoneyDislay {
   }
 }
 ```
-
-### Large cases should be handled
-
 
 ### Commit messages should be clear and accurately describe new code
 We've all written commit messages like "Changed some crap", "damn it",
