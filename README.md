@@ -178,7 +178,77 @@ function getIngredientsFromFile() {
 }
 ```
 
-## User Input
+## Limits
+
+### Null cases should be handled
+If you have a list component for example, all is well and good if you display a
+nice beautiful table that shows all its data. Your users love it and you get a
+promotion! But what happens when no data comes back? What do you show in the
+null case? Your code should be resilient to every case that can occur. If
+there's something bad that can happen in your code, eventually it will happen.
+
+```javascript
+class InventoryList {
+  constructor(data) {
+    this.data = data;
+  }
+
+  render() {
+    return (
+      <table>
+        <tbody>
+          <tr>
+            <th>
+              ID
+            </th>
+            <th>
+              Product
+            </th>
+          </tr>
+          // We should should something for the null case here if there's
+          // nothing in the data inventory
+          {Object.keys(this.data.inventory).map(itemId => (
+              <tr key={i}>
+                <td>
+                  {itemId}
+                </td>
+
+                <td>
+                  {this.state.inventory[itemId].product}
+                </td>
+              </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  }
+}
+```
+
+### Large cases should be handled
+In the list above, what would happen if 10,000 items came back from the
+inventory? In that case you need some form of pagination or infinite scroll.
+Be sure to always assess the potential edge cases in terms of volume, especially
+when it comes to UI programming.
+
+### Singular cases should be handled
+```javascript
+
+class MoneyDislay {
+  constructor(amount) {
+    this.amount = amount;
+  }
+
+  render() {
+    // What happens if the user has 1 dollar? You can't say plural "dollars"
+    return (
+      <div className="fancy-class">
+        You have {this.amount} dollars in your account
+      </div>
+    );
+  }
+}
+```
 
 ### User input should be limited
 Users can potentially input an unlimited amount of data to send to you. It's
@@ -316,76 +386,6 @@ assert(date1 === '1/6/2017');
 > _"Everything can be filed under miscellaneous"_
 
 > George Bernard Shaw
-
-### Null cases should be handled
-If you have a list component for example, all is well and good if you display a
-nice beautiful table that shows all its data. Your users love it and you get a
-promotion! But what happens when no data comes back? What do you show in the
-null case? Your code should be resilient to every case that can occur. If
-there's something bad that can happen in your code, eventually it will happen.
-
-```javascript
-class InventoryList {
-  constructor(data) {
-    this.data = data;
-  }
-
-  render() {
-    return (
-      <table>
-        <tbody>
-          <tr>
-            <th>
-              ID
-            </th>
-            <th>
-              Product
-            </th>
-          </tr>
-          // We should should something for the null case here if there's
-          // nothing in the data inventory
-          {Object.keys(this.data.inventory).map(itemId => (
-              <tr key={i}>
-                <td>
-                  {itemId}
-                </td>
-
-                <td>
-                  {this.state.inventory[itemId].product}
-                </td>
-              </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  }
-}
-```
-
-### Large cases should be handled
-In the list above, what would happen if 10,000 items came back from the
-inventory? In that case you need some form of pagination or infinite scroll.
-Be sure to always assess the potential edge cases in terms of volume, especially
-when it comes to UI programming.
-
-### Singular cases should be handled
-```javascript
-
-class MoneyDislay {
-  constructor(amount) {
-    this.amount = amount;
-  }
-
-  render() {
-    // What happens if the user has 1 dollar? You can't say plural "dollars"
-    return (
-      <div className="fancy-class">
-        You have {this.amount} dollars in your account
-      </div>
-    );
-  }
-}
-```
 
 ### Commit messages should be clear and accurately describe new code
 We've all written commit messages like "Changed some crap", "damn it",
