@@ -298,11 +298,18 @@ assert(result.status === enums.SUCCESS);
 
 ### Tests should stress edge cases and limits of a function
 ```javascript
-function dateAdd(dateTime, minutes) {
+function dateAddDays(dateTime, day) {
   // ...
 }
 
+let dateTime = '1/1/2017'
+let date1 = dateAddDays(dateTime, 5);
 
+assert(date1 === '1/6/2017');
+
+// What happens if we add negative days?
+// What happens if we add fractional days: 1.2, 8.7, etc.
+// What happens if we add 1 billion days?
 ```
 
 ## Miscellaneous
@@ -311,6 +318,8 @@ function dateAdd(dateTime, minutes) {
 > George Bernard Shaw
 
 ### Null cases should be handled
+
+### Singular cases should be handled
 
 ### Large cases should be handled
 
