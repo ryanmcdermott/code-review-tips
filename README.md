@@ -271,10 +271,37 @@ router.route('/request-ride').post((req, res) => {
 ### New code should be tested
 All new code should include a test, whether it fixes a bug, or is a new feature.
 If it's a bug fix it should have a test proving that the bug is fixed. And if
-it's a new feature, every  component should be unit tested and there should be
-an integration test ensuring that it works with the rest of the system.
+it's a new feature, then every component should be unit tested and there should
+be an integration test ensuring that the feature works with the rest of the
+system.
 
-### Tests should actually test what the function is doing
+### Tests should actually test all of what the function does
+```javascript
+function payEmployeeSalary(employeeId, amount, callback) {
+  db.get('EMPLOYEES', employeeId).then(user => {
+    return sendMoney(user, amount);
+  }).then(res => {  
+    if (callback) {
+      callback(res);
+    }
+
+    return res;
+  })
+}
+
+const callback = (res) => console.log('called', res);
+const employee = createFakeEmployee('john jacob jingleheimer schmidt');
+const result = payEmployeeSalary(employee.id, 1000, callback);
+assert(result.status === enums.SUCCESS);
+// Should test that callback gets called
+```
+
+### Tests should stress edge cases and limits of a function
+```javascript
+function dateAdd(dateTime, minutes, ) {
+
+}
+```
 
 ## Miscellaneous
 > _"Everything can be filed under miscellaneous"_
