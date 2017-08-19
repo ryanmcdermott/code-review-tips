@@ -15,7 +15,7 @@
 ## Introduction
 Code reviews can inspire dread in both reviewer and reviewee. Having your
 code analyzed can feel as invasive as being screened by the TSA as you go off
-to a beautiful vacation. Even worse, reviewing other people's code can feel like
+to your vacation. Even worse, reviewing other people's code can feel like
 a painful and ambiguous exercise, searching for problems and not even knowing
 where to begin.
 
@@ -33,7 +33,7 @@ shots.
 
 Having others review our work ensures that we deliver the best product to users
 and with the least amount of errors. Make sure your team implements a code
-review process for new code that is introduced into your code base. Find a
+review process for new code that is introduced into your codebase. Find a
 process that works for you and your team. There's no one size fits all. The
 important point is to do code reviews as regularly as possible.
 
@@ -45,7 +45,7 @@ argue about nuances such as code formatting and whether to use `let` or `var`.
 Having a formatter and linter can save your team a lot of time from reviews
 that your computer can do for you.
 
-## Code reviews should avoid API discussion
+### Code reviews should avoid API discussion
 These discussions should happen before the code is even written. Don't try to
 argue about the floor plan once you've poured the concrete
 foundation.
@@ -65,7 +65,7 @@ suggesting a fix. It's the little things that make a big difference sometimes!
 ### Variable and function names should be clear
 Naming is one of the hardest problems in computer science. We've all given names
 to variables, functions, and files that are confusing. Help your teammate out
-by suggesting a clearer name if one doesn't make sense.
+by suggesting a clearer name, if the one you're reading doesn't make sense.
 
 ```javascript
 // This function could be better named as namesToUpperCase
@@ -77,7 +77,7 @@ function u(names) {
 ### Functions should be short
 Functions should do one thing! Long functions usually mean that they are doing
 too much. Tell your teammate to split out the function into multiple different
-functions.
+ones.
 
 ```javascript
 // This is both emailing clients and deciding which are active. Should be
@@ -102,7 +102,7 @@ responsible for creating fake names like "Keyser Söze". If the
 database of names, that should be in a separate module.
 
 There's no rule for how long a file should be, but if it's long like below and
-includes functions that don't relate to one another ,then it should probably
+includes functions that don't relate to one another, then it should probably
 be split apart.
 
 ```javascript
@@ -153,7 +153,7 @@ function leftPad (str, len, ch) {
 
 ### Functions should be as pure as possible
 ```javascript
-// Global variable referenced by following function.
+// Global variable is referenced by the following function.
 // If we had another function that used this name, now it'd be an array and it
 // could break it. Instead it's better to pass in a name parameter
 let name = 'Ryan McDermott';
@@ -163,8 +163,6 @@ function splitIntoFirstAndLastName() {
 }
 
 splitIntoFirstAndLastName();
-
-console.log(name); // ['Ryan', 'McDermott'];
 ```
 
 ### I/O functions should have failure cases handled
@@ -347,7 +345,7 @@ if there are any ways to improve the efficiency of a piece of code. Your users
 will thank you for the faster speeds!
 
 ```javascript
-// If mentions was a hash data structure you wouldn't need to iterate through
+// If mentions was a hash data structure, you wouldn't need to iterate through
 // all mentions to find a user. You could simply return the presence of the
 // user key in the mentions hash
 function isUserMentionedInComments(mentions, user) {
@@ -408,7 +406,8 @@ const callback = (res) => console.log('called', res);
 const employee = createFakeEmployee('john jacob jingleheimer schmidt');
 const result = payEmployeeSalary(employee.id, 1000, callback);
 assert(result.status === enums.SUCCESS);
-// Should test that callback gets called
+// What about the callback? That should be tested
+
 ```
 
 ### Tests should stress edge cases and limits of a function
