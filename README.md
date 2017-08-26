@@ -137,7 +137,7 @@ function leftPad (str, len, ch) {
   len = len - str.length;
 
   while (true) {
-    // This needs a comment, why a logical and here?
+    // This needs a comment, why a bitwise and here?
     if (len & 1) pad += ch;
     // This needs a comment, why a bit shift here?
     len >>= 1;
