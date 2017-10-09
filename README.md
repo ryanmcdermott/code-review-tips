@@ -207,7 +207,7 @@ class InventoryList {
               Product
             </th>
           </tr>
-          // We should should something for the null case here if there's
+          // We should show something for the null case here if there's
           // nothing in the data inventory
           {Object.keys(this.data.inventory).map(itemId => (
               <tr key={i}>
