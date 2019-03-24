@@ -166,7 +166,7 @@ splitIntoFirstAndLastName();
 ```
 
 ### I/O functions should have failure cases handled
-Any function that does I/O should handle when something goes wrong
+Any function that does `I/O` should handle when something goes wrong
 
 ```javascript
 function getIngredientsFromFile() {
