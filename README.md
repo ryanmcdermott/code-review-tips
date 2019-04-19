@@ -92,7 +92,7 @@ function emailClients(clients) {
 }
 ```
 
-### Files should be short
+### Files should be cohesive, and ideally short
 Just like functions, a file should be about one thing. A file represents a
 module and a module should do one thing for your codebase.
 
@@ -101,7 +101,7 @@ responsible for creating fake names like "Keyser Söze". If the
 `fake-name-generator` also includes a bunch of utility functions for querying a
 database of names, that should be in a separate module.
 
-There's no rule for how long a file should be, but if it's long like below and
+There's no rule for how long a file should be, but if it's long like below **and**
 includes functions that don't relate to one another, then it should probably
 be split apart.
 
