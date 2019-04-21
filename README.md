@@ -1,22 +1,24 @@
 # code-review-tips
 
 ## Table of Contents
-  1. [Introduction](#introduction)
-  2. [Why Review Code?](#why-review-code)
-  3. [Basics](#basics)
-  4. [Readability](#readability)
-  5. [Side Effects](#side-effects)
-  6. [Limits](#limits)
-  7. [Security](#security)
-  8. [Performance](#performance)
-  9. [Testing](#testing)
-  10. [Miscellaneous](#miscellaneous)
+
+1. [Introduction](#introduction)
+2. [Why Review Code?](#why-review-code)
+3. [Basics](#basics)
+4. [Readability](#readability)
+5. [Side Effects](#side-effects)
+6. [Limits](#limits)
+7. [Security](#security)
+8. [Performance](#performance)
+9. [Testing](#testing)
+10. [Miscellaneous](#miscellaneous)
 
 ## Introduction
+
 Code reviews can inspire dread in both reviewer and reviewee. Having your
-code analyzed can feel as invasive and uncomfortable. Even worse, reviewing other people's code can feel like
-a painful and ambiguous exercise, searching for problems and not even knowing
-where to begin.
+code analyzed can feel as invasive and uncomfortable. Even worse, reviewing other 
+people's code can feel like a painful and ambiguous exercise, searching 
+for problems and not even knowing where to begin.
 
 This project aims to provide some solid tips for how to review the code that
 you and your team write. All examples are written in JavaScript, but the advice
@@ -25,6 +27,7 @@ exhaustive list, but hopefully this will help you catch as many bugs as
 possible long before users ever see your feature.
 
 ## Why Review Code?
+
 Code reviews are a necessary part of the software engineering process because
 you alone can't catch every problem in a piece of code you
 write. That's ok though! Even the best basketball players in the world miss
@@ -39,17 +42,20 @@ important point is to do code reviews as regularly as possible.
 ## Basics
 
 ### Code reviews should be as automated as possible
+
 Avoid discussing details that can be handled by a static analysis tool. Don't
 argue about nuances such as code formatting and whether to use `let` or `var`.
 Having a formatter and linter can save your team a lot of time from reviews
 that your computer can do for you.
 
 ### Code reviews should avoid API discussion
+
 These discussions should happen before the code is even written. Don't try to
 argue about the floor plan once you've poured the concrete
 foundation.
 
 ### Code reviews should be kind
+
 It's scary to have your code reviewed and it can bring about feelings of
 insecurity in even the most experienced developer. Be positive in your language
 and keep your teammates comfortable and secure in their work!
@@ -57,11 +63,13 @@ and keep your teammates comfortable and secure in their work!
 ## Readability
 
 ### Typos should be corrected
+
 Avoid nitpicking as much as you can and save it for your linter, compiler, and
 formatter. When you can't, such as in the case of typos, leave a kind comment
 suggesting a fix. It's the little things that make a big difference sometimes!
 
 ### Variable and function names should be clear
+
 Naming is one of the hardest problems in computer science. We've all given names
 to variables, functions, and files that are confusing. Help your teammate out
 by suggesting a clearer name, if the one you're reading doesn't make sense.
@@ -74,6 +82,7 @@ function u(names) {
 ```
 
 ### Functions should be short
+
 Functions should do one thing! Long functions usually mean that they are doing
 too much. Tell your teammate to split out the function into multiple different
 ones.
@@ -82,7 +91,7 @@ ones.
 // This is both emailing clients and deciding which are active. Should be
 // 2 different functions.
 function emailClients(clients) {
-  clients.forEach((client) => {
+  clients.forEach(client => {
     const clientRecord = database.lookup(client);
     if (clientRecord.isActive()) {
       email(client);
@@ -92,6 +101,7 @@ function emailClients(clients) {
 ```
 
 ### Files should be cohesive, and ideally short
+
 Just like functions, a file should be about one thing. A file represents a
 module and a module should do one thing for your codebase.
 
@@ -105,17 +115,20 @@ includes functions that don't relate to one another, then it should probably
 be split apart.
 
 ```javascript
-1: import _ from 'lodash';
-2: function generateFakeNames() {
-3:   // ..
-4: }
-...
-1128: function queryRemoteDatabase() {
-1129:   // ...  
-1130: }
+// Line 1
+import _ from 'lodash';
+function generateFakeNames() {
+  // ..
+}
+
+// Line 1128
+function queryRemoteDatabase() {
+  // ...
+}
 ```
 
 ### Exported functions should be documented
+
 If your function is intended to be used by other libraries, it helps to add
 documentation so users of it know what it does.
 
@@ -127,11 +140,12 @@ export function networkMonitor(graph, duration, failureCallback) {
 ```
 
 ### Complex code should be commented
+
 If you have named things well and the logic is still confusing, then it's time
 for a comment.
 
 ```javascript
-function leftPad (str, len, ch) {
+function leftPad(str, len, ch) {
   str = str + '';
   len = len - str.length;
 
@@ -151,6 +165,7 @@ function leftPad (str, len, ch) {
 ## Side Effects
 
 ### Functions should be as pure as possible
+
 ```javascript
 // Global variable is referenced by the following function.
 // If we had another function that used this name, now it'd be an array and it
@@ -165,13 +180,14 @@ splitIntoFirstAndLastName();
 ```
 
 ### I/O functions should have failure cases handled
+
 Any function that does I/O should handle when something goes wrong
 
 ```javascript
 function getIngredientsFromFile() {
-  const onFulfilled = (buffer) => {
+  const onFulfilled = buffer => {
     let lines = buffer.split('\n');
-    return lines.forEach(line => <Ingredient ingredient={line}/>)
+    return lines.forEach(line => <Ingredient ingredient={line} />);
   };
 
   // What about when this rejected because of an error? What do we return?
@@ -182,6 +198,7 @@ function getIngredientsFromFile() {
 ## Limits
 
 ### Null cases should be handled
+
 If you have a list component for example, all is well and good if you display a
 nice beautiful table that shows all its data. Your users love it and you get a
 promotion! But what happens when no data comes back? What do you show in the
@@ -199,25 +216,17 @@ class InventoryList {
       <table>
         <tbody>
           <tr>
-            <th>
-              ID
-            </th>
-            <th>
-              Product
-            </th>
+            <th>ID</th>
+            <th>Product</th>
           </tr>
-          // We should show something for the null case here if there's
-          // nothing in the data inventory
+          // We should show something for the null case here if there's // nothing
+          in the data inventory
           {Object.keys(this.data.inventory).map(itemId => (
-              <tr key={i}>
-                <td>
-                  {itemId}
-                </td>
+            <tr key={i}>
+              <td>{itemId}</td>
 
-                <td>
-                  {this.state.inventory[itemId].product}
-                </td>
-              </tr>
+              <td>{this.state.inventory[itemId].product}</td>
+            </tr>
           ))}
         </tbody>
       </table>
@@ -227,14 +236,15 @@ class InventoryList {
 ```
 
 ### Large cases should be handled
+
 In the list above, what would happen if 10,000 items came back from the
 inventory? In that case you need some form of pagination or infinite scroll.
 Be sure to always assess the potential edge cases in terms of volume, especially
 when it comes to UI programming.
 
 ### Singular cases should be handled
-```javascript
 
+```javascript
 class MoneyDislay {
   constructor(amount) {
     this.amount = amount;
@@ -252,6 +262,7 @@ class MoneyDislay {
 ```
 
 ### User input should be limited
+
 Users can potentially input an unlimited amount of data to send to you. It's
 important to set limits if a function takes any kind of user data in.
 
@@ -266,6 +277,7 @@ router.route('/message').post((req, res) => {
 ```
 
 ### Functions should handle unexpected user input
+
 Users will always surprise you with the data they give you. Don't expect that
 you will always get the right type of data or even any data in a request from a
 user. [And don't rely on client-side validation alone](https://twitter.com/ryconoclast/status/885523459748487169)
@@ -283,6 +295,7 @@ router.route('/transfer-money').post((req, res) => {
 ```
 
 ## Security
+
 Data security is the most important aspect of your application. If users can't
 trust you with their data, then you won't have a business. There are numerous
 different types of security exploits that can plague an app, depending on the
@@ -292,28 +305,29 @@ as much security review as you can on every commit, and perform routine security
 audits.
 
 ### XSS should not be possible
+
 Cross-site scripting (XSS), is one of the largest vectors for security attacks
 on a web application. It occurs when you take user data and include it in your
 page without first properly sanitizing it. This can cause your site to execute
 source code from remote pages.
 
 ```javascript
-function () {
+function getBadges() {
   let badge = document.getElementsByClassName('badge');
   let nameQueryParam = getQueryParams('name');
 
   /**
-    * What if nameQueryParam was `<script>sendCookie(document.cookie)</script>`?
-    * If that was the query param, a malicious user could lure a user to click a
-    * link with that as the `name` query param, and have the user unknowingly
-    * send their data to a bad actor.
-    */
+   * What if nameQueryParam was `<script>sendCookie(document.cookie)</script>`?
+   * If that was the query param, a malicious user could lure a user to click a
+   * link with that as the `name` query param, and have the user unknowingly
+   * send their data to a bad actor.
+   */
   badge.children[0].innerHTML = nameQueryParam;
 }
-
 ```
 
 ### Personally Identifiable Information (PII) should not leak
+
 You bear an enormous weight of responsibility every time you take in user data.
 If you leak data in URLs, in analytics tracking to third parties, or even expose
 data to employees that shouldn't have access, you greatly hurt your users and
@@ -322,7 +336,7 @@ your business. Be careful with other people's lives!
 ```javascript
 router.route('/bank-user-info').get((req, res) => {
   const name = user.name;
-  const id = user.id
+  const id = user.id;
   const socialSecurityNumber = user.ssn;
 
   // There's no reason to send a socialSecurityNumber back in a query parameter
@@ -332,13 +346,14 @@ router.route('/bank-user-info').get((req, res) => {
     name,
     id,
     socialSecurityNumber
-  })
+  });
 });
 ```
 
 ## Performance
 
 ### Functions should use efficient algorithms and data structures
+
 This is different for every particular case, but use your best judgment to see
 if there are any ways to improve the efficiency of a piece of code. Your users
 will thank you for the faster speeds!
@@ -353,13 +368,14 @@ function isUserMentionedInComments(mentions, user) {
     if (mention.user === user) {
       mentioned = true;
     }
-  })
+  });
 
   return mentioned;
 }
 ```
 
 ### Important actions should be logged
+
 Logging helps give metrics about performance and insight into user behavior.
 Not every action needs to be logged, but decide with your team what makes sense
 to keep track of for data analytics. And be sure that no personally identifiable
@@ -381,6 +397,7 @@ router.route('/request-ride').post((req, res) => {
 ## Testing
 
 ### New code should be tested
+
 All new code should include a test, whether it fixes a bug, or is a new feature.
 If it's a bug fix it should have a test proving that the bug is fixed. And if
 it's a new feature, then every component should be unit tested and there should
@@ -388,34 +405,37 @@ be an integration test ensuring that the feature works with the rest of the
 system.
 
 ### Tests should actually test all of what the function does
+
 ```javascript
 function payEmployeeSalary(employeeId, amount, callback) {
-  db.get('EMPLOYEES', employeeId).then(user => {
-    return sendMoney(user, amount);
-  }).then(res => {  
-    if (callback) {
-      callback(res);
-    }
+  db.get('EMPLOYEES', employeeId)
+    .then(user => {
+      return sendMoney(user, amount);
+    })
+    .then(res => {
+      if (callback) {
+        callback(res);
+      }
 
-    return res;
-  })
+      return res;
+    });
 }
 
-const callback = (res) => console.log('called', res);
+const callback = res => console.log('called', res);
 const employee = createFakeEmployee('john jacob jingleheimer schmidt');
 const result = payEmployeeSalary(employee.id, 1000, callback);
 assert(result.status === enums.SUCCESS);
 // What about the callback? That should be tested
-
 ```
 
 ### Tests should stress edge cases and limits of a function
+
 ```javascript
 function dateAddDays(dateTime, day) {
   // ...
 }
 
-let dateTime = '1/1/2017'
+let dateTime = '1/1/2017';
 let date1 = dateAddDays(dateTime, 5);
 
 assert(date1 === '1/6/2017');
@@ -426,11 +446,13 @@ assert(date1 === '1/6/2017');
 ```
 
 ## Miscellaneous
+
 > _"Everything can be filed under miscellaneous"_
 
 > George Bernard Shaw
 
 ### TODO comments should be tracked
+
 TODO comments are great for letting you and your fellow engineers know that something
 needs to be fixed later. Sometimes you gotta ship code and wait to fix it
 later. But eventually you'll have to clean it up! That's why you should track it
@@ -438,6 +460,7 @@ and give a corresponding ID from your issue tracking system so you can schedule
 it and keep track of where the problem is in your codebase.
 
 ### Commit messages should be clear and accurately describe new code
+
 We've all written commit messages like "Changed some crap", "damn it",
 "ugg one more to fix this stupid bug". These are funny and satisfying, but not
 helpful when you're up on a Saturday morning because you pushed code on a Friday
@@ -447,6 +470,7 @@ a ticket number from your issue tracking system if you have one. That will make
 searching through your commit log much easier.
 
 ### The code should do what it's supposed to do
+
 This seems obvious, but most reviewers don't have the time or take the time to
 manually test every user-facing change. It's important to make sure the business
 logic of every change is as per design. It's easy to forget that when you're
