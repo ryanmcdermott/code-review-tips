@@ -238,7 +238,7 @@ class InventoryList {
 ### Large cases should be handled
 
 In the list above, what would happen if 10,000 items came back from the
-inventory? In that case you need some form of pagination or infinite scroll.
+inventory? In that case, you need some form of pagination or infinite scroll.
 Be sure to always assess the potential edge cases in terms of volume, especially
 when it comes to UI programming.
 
@@ -306,7 +306,7 @@ audits.
 
 ### XSS should not be possible
 
-Cross-site scripting (XSS), is one of the largest vectors for security attacks
+Cross-site scripting (XSS) is one of the largest vectors for security attacks
 on a web application. It occurs when you take user data and include it in your
 page without first properly sanitizing it. This can cause your site to execute
 source code from remote pages.
@@ -399,7 +399,7 @@ router.route('/request-ride').post((req, res) => {
 ### New code should be tested
 
 All new code should include a test, whether it fixes a bug, or is a new feature.
-If it's a bug fix it should have a test proving that the bug is fixed. And if
+If it's a bug fix, it should have a test proving that the bug is fixed. And if
 it's a new feature, then every component should be unit tested and there should
 be an integration test ensuring that the feature works with the rest of the
 system.
