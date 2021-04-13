@@ -187,7 +187,7 @@ Any function that does I/O should handle when something goes wrong
 function getIngredientsFromFile() {
   const onFulfilled = buffer => {
     let lines = buffer.split('\n');
-    return lines.forEach(line => <Ingredient ingredient={line} />);
+    return lines.map(line => <Ingredient ingredient={line} />);
   };
 
   // What about when this rejected because of an error? What do we return?
@@ -214,11 +214,14 @@ class InventoryList {
   render() {
     return (
       <table>
+        <caption>Inventory</caption>
+        <thead>
+           <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Product</th>
+           </tr>
+        </thead>
         <tbody>
-          <tr>
-            <th>ID</th>
-            <th>Product</th>
-          </tr>
           // We should show something for the null case here if there's // nothing
           in the data inventory
           {Object.keys(this.data.inventory).map(itemId => (
@@ -464,7 +467,7 @@ it and keep track of where the problem is in your codebase.
 We've all written commit messages like "Changed some crap", "damn it",
 "ugg one more to fix this stupid bug". These are funny and satisfying, but not
 helpful when you're up on a Saturday morning because you pushed code on a Friday
-night and can't figure out what the bad code was doing when you `git blamed` the
+night and can't figure out what the bad code was doing when you `git blame` the
 commit. Write commit messages that describe the code accurately, and include
 a ticket number from your issue tracking system if you have one. That will make
 searching through your commit log much easier.
