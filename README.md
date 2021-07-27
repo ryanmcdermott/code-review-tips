@@ -16,7 +16,7 @@
 ## Introduction
 
 Code reviews can inspire dread in both reviewer and reviewee. Having your
-code analyzed can feel as invasive and uncomfortable. Even worse, reviewing other 
+code analyzed can feel invasive and uncomfortable. Even worse, reviewing other 
 people's code can feel like a painful and ambiguous exercise, searching 
 for problems and not even knowing where to begin.
 
