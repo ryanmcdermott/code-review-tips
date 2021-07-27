@@ -190,7 +190,7 @@ function getIngredientsFromFile() {
     return lines.map(line => <Ingredient ingredient={line} />);
   };
 
-  // What about when this rejected because of an error? What do we return?
+  // What about when this is rejected because of an error? What do we return?
   return readFile('./ingredients.txt').then(onFulfilled);
 }
 ```
